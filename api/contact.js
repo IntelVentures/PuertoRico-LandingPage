@@ -10,48 +10,27 @@ export default async function handler(req, res) {
   }
 
   try {
-    const query = `
-      mutation CreateItem($boardId: ID!, $itemName: String!, $columnVals: JSON!) {
-        create_item (
-          board_id: $boardId,
-          item_name: $itemName,
-          column_values: $columnVals
-        ) {
-          id
-        }
-      }
-    `;
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxAlryvtDlWzjdJnlqQS5LCmDOCfZz10ys-JDdOrD6Uhkzpj-xzVcj33iKRASKeaGwQkQ/exec";
 
-    const columnValues = {
-      text_mkmkt1wj: nombre,
-      email_mkmkjje1: {
-        email: email,
-        text: email
-      },
-      long_text_mkmkb82h: comentarios
+    const payload = {
+      nombre: nombre,
+      email: email,
+      comentarios: comentarios
     };
 
-
-    const variables = {
-      boardId: "8333309683",
-      itemName: nombre,
-      columnVals: JSON.stringify(columnValues)
-    };
-
-    const response = await fetch('https://api.monday.com/v2', {
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
       headers: {
-        'Authorization': process.env.MONDAY_API_KEY,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ query, variables }),
+      body: JSON.stringify(payload),
     });
 
     const data = await response.json();
 
-    if (data.errors) {
-      console.error('Monday.com error:', data.errors);
-      return res.status(500).json({ error: 'Error al crear el ítem en Monday.com.' });
+    if (data.result !== "success") {
+      console.error('Google Script error:', data);
+      return res.status(500).json({ error: 'Error al guardar en Google Sheets.' });
     }
 
     return res.status(200).json({ message: 'Formulario enviado exitosamente.' });
@@ -61,6 +40,8 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Error del servidor.' });
   }
 }
+
+
 
 
 
