@@ -142,7 +142,11 @@ export function WhatIs() {
   return (
     <section id="programa" style={{ background: "#fff" }}>
       <div className="pelep-split" style={{ maxWidth: 1180, margin: "0 auto", padding: "76px 28px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}>
-        <PhotoSlot label="instalación solar en comunidad de Puerto Rico" h={340} />
+        <PhotoSlot
+          src="/images/instalacion-solar.jpg"
+          label="Instalación solar con batería en un colmado de una comunidad de Puerto Rico"
+          h={340}
+        />
         <div>
           <SectionHeading
             eyebrow="¿Qué es el PELEP?"
@@ -235,9 +239,9 @@ export function Municipios() {
           </div>
         </div>
         <PhotoSlot
-          label="alcaldía / edificio municipal de Puerto Rico"
+          src="/images/alcaldia-municipal.jpg"
+          label="Alcaldía con paneles solares en la plaza de un municipio de Puerto Rico"
           h={320}
-          style={{ background: "rgba(255,255,255,0.08)", border: "1px dashed rgba(255,255,255,0.4)", color: "rgba(255,255,255,0.8)" }}
         />
       </div>
     </section>

@@ -500,16 +500,36 @@ export function SectionHeading({
   );
 }
 
-/* ---------------- PhotoSlot (image placeholder) ---------------- */
+/* ---------------- PhotoSlot (real image, or dashed placeholder) ---------------- */
 export function PhotoSlot({
   label,
   h = 280,
+  src,
   style = {},
 }: {
   label: string;
   h?: number;
+  src?: string;
   style?: CSSProperties;
 }) {
+  if (src) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={src}
+        alt={label}
+        loading="lazy"
+        style={{
+          width: "100%",
+          height: h,
+          objectFit: "cover",
+          display: "block",
+          borderRadius: "var(--radius-lg)",
+          boxShadow: "var(--shadow-md)",
+        }}
+      />
+    );
+  }
   return (
     <div
       style={{
