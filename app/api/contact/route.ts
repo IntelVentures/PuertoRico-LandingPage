@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const { nombre, email, comentarios } = await request.json();
+    const { nombre, email, rol, municipio, telefono, comentarios } =
+      await request.json();
 
-    if (!nombre || !email || !comentarios) {
+    if (!nombre || !email) {
       return NextResponse.json(
         { error: "Faltan campos obligatorios." },
         { status: 400 }
@@ -25,11 +26,21 @@ export async function POST(request: Request) {
       );
     }
 
-    // Forward to Google Apps Script
+    // Forward every field so the Apps Script can write one column each.
+    // `comentarios` (packed summary) is kept as a bridge: the current
+    // Sheet1 script still reads it until the new column-per-field script
+    // is redeployed.
     const googleRes = await fetch(scriptUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nombre, email, comentarios }),
+      body: JSON.stringify({
+        nombre,
+        email,
+        rol,
+        municipio,
+        telefono,
+        comentarios,
+      }),
     });
 
     const googleJson = await googleRes.json();

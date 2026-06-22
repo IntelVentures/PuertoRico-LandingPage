@@ -282,7 +282,7 @@ export function ContactSection() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre, email, comentarios }),
+        body: JSON.stringify({ nombre, email, rol, municipio, telefono, comentarios }),
       });
       const json = await res.json();
       if (json.message === "success") {
