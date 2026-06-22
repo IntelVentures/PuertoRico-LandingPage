@@ -1,5 +1,3 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/LandingPage.html" }
-  ]
+  "framework": "nextjs"
 }
